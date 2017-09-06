@@ -1,0 +1,104 @@
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+using System.Threading;
+
+namespace lesson_first
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        private OpenQA.Selenium.IWebDriver driver;
+        private WebDriverWait wait;
+
+        [TestMethod]
+        public void Start()
+        {
+            driver = new OpenQA.Selenium.Chrome.ChromeDriver();
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            
+        }
+        [TestMethod]
+        public void TestMethod1()
+        {
+            driver = new ChromeDriver();
+            driver.Url = "https://kaspi.kz/pay/mobile";
+            // driver.Navigate
+          //  Thread.Sleep(3000);
+              driver.FindElement(OpenQA.Selenium.By.Id("headerRegionConfirm__ConfirmButton")).Click();
+         //   Thread.Sleep(4000);
+            driver.FindElement(OpenQA.Selenium.By.ClassName("payMenu__buttonExpandMenu")).Click();
+            var counterCategories = driver.FindElements(OpenQA.Selenium.By.ClassName("payMenu__item"));
+
+            for(int i=0;i< counterCategories.Count-1;i++)
+            {
+               // var menu = driver.FindElement(OpenQA.Selenium.By.Id("payMenu"));
+                var menuitems = driver.FindElements(OpenQA.Selenium.By.ClassName("payMenu__item"));
+
+                menuitems[i].Click();
+                var counterServices = driver.FindElements(OpenQA.Selenium.By.ClassName("payOther__item"));
+                for(int j=0;j<counterServices.Count;j++)
+                {
+                   var services = driver.FindElements(OpenQA.Selenium.By.ClassName("payOther__item"));
+                    services[j].Click();
+                    driver.Navigate().Back();
+                }
+
+
+            }
+           // driver.FindElement(OpenQA.Selenium.By.Name("btng")).Click();
+            wait.Until(ExpectedConditions.TitleIs("webdriver - поиск в Google"));
+        }
+
+
+        [TestMethod]
+        public void MakeMobilePayment()
+        {
+            driver = new ChromeDriver();
+            driver.Url = "https://kaspi.kz/entrance";
+
+            driver.FindElement(OpenQA.Selenium.By.Id("headerRegionConfirm__ConfirmButton")).Click();
+            
+
+            driver.FindElement(OpenQA.Selenium.By.Id("txtLogin")).SendKeys("7758808894");
+            driver.FindElement(OpenQA.Selenium.By.Id("txtPassword")).SendKeys("********");
+            driver.FindElement(OpenQA.Selenium.By.ClassName("entrance__loginButton")).Click();
+           
+     //       driver.Navigate().GoToUrl("https://kaspi.kz/pay/mobile");
+
+     //       driver.FindElement(OpenQA.Selenium.By.Name("-1")).SendKeys("7758808894");
+       //     driver.FindElement(OpenQA.Selenium.By.Id("amount")).SendKeys("1");
+       //     driver.FindElement(OpenQA.Selenium.By.ClassName("form__button")).Click();
+       //     driver.FindElement(OpenQA.Selenium.By.Id("payment_card_0")).Click();
+
+     //       driver.FindElement(OpenQA.Selenium.By.ClassName("submitForm")).Click();
+
+
+
+            driver.Navigate().GoToUrl("https://kaspi.kz/Transfers/Transfer/Owner2Owner");
+
+            driver.FindElement(OpenQA.Selenium.By.ClassName("sourceAccounts__title")).Click();
+            driver.FindElement(OpenQA.Selenium.By.Id("SourceId7")).Click();
+            
+          
+
+        }
+
+        [TestMethod]
+        public void stickers()
+        {
+            driver = new ChromeDriver();
+            driver.Url = "https://www.lamoda.kz/c/4153/default-women/?is_new=1&is_sale=0&sitelink=topmenuW&l=1";
+
+        }
+
+
+        public void stop()
+        {
+            driver.Quit();
+            driver = null;
+        }
+    }
+
+}
